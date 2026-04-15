@@ -14,8 +14,11 @@ export default function K05_Cart() {
   // Use the cart passed from the previous page, or fallback to INITIAL_CART for direct visits
   const initialCart = location.state?.cart || INITIAL_CART;
   const [cart, setCart] = useState<any[]>(initialCart);
+  const [pickupMethod, setPickupMethod] = useState<'dine-in' | 'take-out'>('dine-in');
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  const PACKAGING_FEE = 1;
+  const itemsTotal = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  const total = itemsTotal + (pickupMethod === 'take-out' ? PACKAGING_FEE : 0);
   const totalCount = cart.reduce((sum, item) => sum + item.count, 0);
 
   const updateCount = (id: number, delta: number) => {
@@ -56,6 +59,33 @@ export default function K05_Cart() {
 
       {/* Middle 920px */}
       <div className="h-[920px] p-8 overflow-y-auto">
+        {/* Pickup Method Selection */}
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">取餐方式</h3>
+          <div className="grid grid-cols-2 gap-6">
+            <button
+              onClick={() => setPickupMethod('dine-in')}
+              className={`py-6 rounded-2xl text-2xl font-bold border-2 transition-all ${
+                pickupMethod === 'dine-in'
+                  ? 'border-orange-500 bg-orange-50 text-orange-600'
+                  : 'border-gray-100 bg-gray-50 text-gray-500'
+              }`}
+            >
+              堂食
+            </button>
+            <button
+              onClick={() => setPickupMethod('take-out')}
+              className={`py-6 rounded-2xl text-2xl font-bold border-2 transition-all ${
+                pickupMethod === 'take-out'
+                  ? 'border-orange-500 bg-orange-50 text-orange-600'
+                  : 'border-gray-100 bg-gray-50 text-gray-500'
+              }`}
+            >
+              自提/打包
+            </button>
+          </div>
+        </div>
+
         {cart.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-gray-400">
             <ShoppingCart size={80} className="mb-6 opacity-20" />
@@ -87,6 +117,23 @@ export default function K05_Cart() {
                 </div>
               </div>
             ))}
+
+            {/* Packaging Fee Item */}
+            {pickupMethod === 'take-out' && (
+              <div className="bg-white p-6 rounded-3xl shadow-sm border border-orange-100 flex gap-6 items-center animate-in slide-in-from-top-4 duration-300">
+                <div className="w-32 h-32 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-500 shrink-0">
+                  <ShoppingCart size={48} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">打包费</h3>
+                  <p className="text-gray-500">自提/打包自动增加</p>
+                </div>
+                <div className="flex items-center gap-4 px-6">
+                  <div className="text-2xl font-bold text-red-500">¥{PACKAGING_FEE.toFixed(2)}</div>
+                  <div className="text-gray-400 text-xl ml-4">x1</div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

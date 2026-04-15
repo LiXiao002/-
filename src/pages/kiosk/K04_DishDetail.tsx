@@ -60,14 +60,42 @@ export default function K04_DishDetail({ dish, onClose, onAdd }: DishDetailProps
           <div className="bg-orange-50 rounded-2xl p-6 mb-8 border border-orange-100">
             <h3 className="text-xl font-bold text-orange-900 mb-4 flex items-center gap-2">
               <AlertCircle size={24} />
-              营养与过敏原提示
+              营养成分 (每份)
             </h3>
-            <div className="grid grid-cols-2 gap-4 text-lg text-orange-800">
-              <div>热量：约 450 kcal</div>
-              <div>蛋白质：约 25g</div>
-              <div className="col-span-2 text-red-600 mt-2">
-                * 本品含有大豆、麸质，过敏者请慎用。
+            <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="bg-white p-3 rounded-xl border border-orange-100">
+                <div className="text-sm text-gray-500">能量</div>
+                <div className="text-xl font-bold text-orange-600">{dish.nutrition?.energy || 0}</div>
+                <div className="text-xs text-gray-400 text-nowrap">kcal</div>
               </div>
+              <div className="bg-white p-3 rounded-xl border border-orange-100">
+                <div className="text-sm text-gray-500">蛋白质</div>
+                <div className="text-xl font-bold text-blue-600">{dish.nutrition?.protein || 0}</div>
+                <div className="text-xs text-gray-400">g</div>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-orange-100">
+                <div className="text-sm text-gray-500">脂肪</div>
+                <div className="text-xl font-bold text-yellow-600">{dish.nutrition?.fat || 0}</div>
+                <div className="text-xs text-gray-400">g</div>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-orange-100">
+                <div className="text-sm text-gray-500">碳水</div>
+                <div className="text-xl font-bold text-green-600">{dish.nutrition?.carbs || 0}</div>
+                <div className="text-xs text-gray-400">g</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">营养知识</h3>
+            <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+              <p className="text-lg text-blue-800 leading-relaxed">
+                💡 <span className="font-bold">健康贴士：</span>
+                {dish.category === '荤菜' ? '适量摄入优质蛋白有助于肌肉生长和修复，建议搭配富含膳食纤维的蔬菜食用。' : 
+                 dish.category === '素菜' ? '蔬菜富含维生素和矿物质，低热量高纤维，有助于维持肠道健康和控制体重。' :
+                 dish.category === '主食' ? '碳水化合物是人体主要的能量来源，建议粗细搭配，维持血糖稳定。' :
+                 '均衡饮食是健康的基础，建议每餐包含谷薯类、蔬果类、畜禽鱼蛋奶类和大豆坚果类。'}
+              </p>
             </div>
           </div>
 

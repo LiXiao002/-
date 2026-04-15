@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Search, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { generateReceiptContent } from "../../lib/receipt";
 
 const MOCK_ORDERS = [
   { id: "DD20231027001", no: "A052", stall: "大众快餐", status: "preparing", time: "2023-10-27 12:05:32", amount: 26 },
@@ -98,6 +99,26 @@ export default function K08_OrderSearch() {
                     <span>订单编号</span>
                     <span className="text-gray-400 text-lg">{order.id}</span>
                   </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                  <button 
+                    onClick={() => {
+                      const content = generateReceiptContent({
+                        orderNo: order.no,
+                        stallName: order.stall,
+                        items: [{ name: "示例菜品", count: 1, price: order.amount }],
+                        totalAmount: order.amount,
+                        time: order.time,
+                        pickupMethod: "堂食"
+                      });
+                      console.log(content);
+                      alert(`正在补打小票:\n${content}`);
+                    }}
+                    className="bg-white border-2 border-orange-500 text-orange-500 px-8 py-3 rounded-full text-xl font-bold active:bg-orange-50 transition-colors"
+                  >
+                    补打小票
+                  </button>
                 </div>
               </div>
             ))}

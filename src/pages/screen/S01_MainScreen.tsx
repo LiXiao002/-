@@ -7,18 +7,47 @@ const OVERDUE = ["A045"]; // 滞留订单
 
 export default function S01_MainScreen() {
   const [time, setTime] = useState(new Date());
+  const [callingNumber, setCallingNumber] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  // Simulate a call every 10 seconds
+  useEffect(() => {
+    const callTimer = setInterval(() => {
+      const randomNo = READY[Math.floor(Math.random() * READY.length)];
+      setCallingNumber(randomNo);
+      setTimeout(() => setCallingNumber(null), 5000);
+    }, 10000);
+    return () => clearInterval(callTimer);
+  }, []);
+
   return (
-    <div className="w-full h-full flex flex-col bg-gray-900 text-white font-sans">
+    <div className="w-full h-full flex flex-col bg-gray-900 text-white font-sans relative overflow-hidden">
+      {/* Calling Overlay */}
+      {callingNumber && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md animate-in fade-in zoom-in duration-300">
+          <div className="bg-orange-600 w-[1200px] h-[600px] rounded-[4rem] shadow-[0_0_100px_rgba(234,88,12,0.6)] border-8 border-white flex flex-col items-center justify-center p-12 text-center">
+            <div className="flex items-center gap-8 mb-12">
+              <Bell size={120} className="text-white animate-bounce" />
+              <h2 className="text-[100px] font-black text-white tracking-widest">请取餐</h2>
+            </div>
+            <div className="text-[240px] font-black text-white font-mono leading-none mb-12 drop-shadow-2xl">
+              {callingNumber}
+            </div>
+            <div className="text-6xl font-bold text-orange-100">
+              请到 <span className="text-white underline underline-offset-8 decoration-white">大众快餐</span> 档口取餐
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Bar 120px */}
       <div className="h-[120px] bg-gray-800 px-12 flex items-center justify-between shrink-0 border-b border-gray-700">
         <div className="flex items-center gap-8">
-          <h1 className="text-5xl font-bold text-white tracking-wider">未来智慧食堂</h1>
+          <h1 className="text-5xl font-bold text-white tracking-wider">智慧营养食堂</h1>
           <div className="h-12 w-px bg-gray-600" />
           <h2 className="text-4xl font-bold text-orange-500">大众快餐</h2>
         </div>

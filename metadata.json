@@ -1,6 +1,8 @@
 {
-  "name": "",
+  "name": "点餐机",
   "description": "",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [],
+  "C7": [],
+  "Xp": []
 }

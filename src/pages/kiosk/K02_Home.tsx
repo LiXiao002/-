@@ -2,54 +2,33 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Search, Store } from "lucide-react";
 
-const REGIONS = [
+const RESTAURANTS = [
   {
-    id: 'R1', name: 'A区',
-    restaurants: [
-      {
-        id: 'RES1', name: '第一食堂',
-        stalls: [
-          { id: 1, name: "特色面食", desc: "手工拉面、刀削面", color: "bg-red-50 text-red-600", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=400&q=80" },
-          { id: 2, name: "大众快餐", desc: "两荤一素、三荤一素", color: "bg-blue-50 text-blue-600", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" },
-        ]
-      },
-      {
-        id: 'RES2', name: '第二食堂',
-        stalls: [
-          { id: 3, name: "风味小吃", desc: "肉夹馍、凉皮", color: "bg-yellow-50 text-yellow-600", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" },
-        ]
-      }
+    id: 'RES1', name: '第一食堂',
+    stalls: [
+      { id: 1, name: "特色面食", desc: "手工拉面、刀削面", color: "bg-red-50 text-red-600", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=400&q=80" },
+      { id: 2, name: "大众快餐", desc: "两荤一素、三荤一素", color: "bg-blue-50 text-blue-600", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" },
     ]
   },
   {
-    id: 'R2', name: 'B区',
-    restaurants: [
-      {
-        id: 'RES3', name: '第三食堂',
-        stalls: [
-          { id: 4, name: "健康轻食", desc: "沙拉、减脂餐", color: "bg-green-50 text-green-600", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" },
-          { id: 5, name: "精品小炒", desc: "现点现炒", color: "bg-purple-50 text-purple-600", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80" },
-        ]
-      }
+    id: 'RES2', name: '第二食堂',
+    stalls: [
+      { id: 3, name: "风味小吃", desc: "肉夹馍、凉皮", color: "bg-yellow-50 text-yellow-600", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" },
+    ]
+  },
+  {
+    id: 'RES3', name: '第三食堂',
+    stalls: [
+      { id: 4, name: "健康轻食", desc: "沙拉、减脂餐", color: "bg-green-50 text-green-600", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" },
+      { id: 5, name: "精品小炒", desc: "现点现炒", color: "bg-purple-50 text-purple-600", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80" },
     ]
   }
 ];
 
 export default function K02_Home() {
   const navigate = useNavigate();
-  const [activeRegionId, setActiveRegionId] = useState(REGIONS[0].id);
-  
-  const activeRegion = REGIONS.find(r => r.id === activeRegionId) || REGIONS[0];
-  const [activeRestaurantId, setActiveRestaurantId] = useState(activeRegion.restaurants[0].id);
-  const activeRestaurant = activeRegion.restaurants.find(r => r.id === activeRestaurantId) || activeRegion.restaurants[0];
-
-  const handleRegionChange = (regionId: string) => {
-    setActiveRegionId(regionId);
-    const region = REGIONS.find(r => r.id === regionId);
-    if (region && region.restaurants.length > 0) {
-      setActiveRestaurantId(region.restaurants[0].id);
-    }
-  };
+  const [activeRestaurantId, setActiveRestaurantId] = useState(RESTAURANTS[0].id);
+  const activeRestaurant = RESTAURANTS.find(r => r.id === activeRestaurantId) || RESTAURANTS[0];
 
   return (
     <div className="w-full h-full flex flex-col bg-gray-50">
@@ -83,26 +62,9 @@ export default function K02_Home() {
           <h2 className="text-3xl font-bold text-gray-900">选择档口</h2>
         </div>
 
-        {/* Level 1: Regions */}
-        <div className="flex gap-4 mb-4 overflow-x-auto hide-scrollbar shrink-0">
-          {REGIONS.map(region => (
-            <button
-              key={region.id}
-              onClick={() => handleRegionChange(region.id)}
-              className={`px-8 py-3 rounded-full text-xl font-bold whitespace-nowrap transition-colors ${
-                activeRegionId === region.id
-                  ? 'bg-gray-900 text-white'
-                  : 'bg-white text-gray-600 border border-gray-200'
-              }`}
-            >
-              {region.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Level 2: Restaurants */}
+        {/* Level 1: Restaurants */}
         <div className="flex gap-8 mb-6 border-b border-gray-200 overflow-x-auto hide-scrollbar shrink-0">
-          {activeRegion.restaurants.map(rest => (
+          {RESTAURANTS.map(rest => (
             <button
               key={rest.id}
               onClick={() => setActiveRestaurantId(rest.id)}
@@ -117,7 +79,7 @@ export default function K02_Home() {
           ))}
         </div>
         
-        {/* Level 3: Stalls Grid */}
+        {/* Level 2: Stalls Grid */}
         <div className="grid grid-cols-2 gap-6 flex-1 overflow-y-auto pb-4 hide-scrollbar">
           {activeRestaurant.stalls.map((stall) => (
             <div 

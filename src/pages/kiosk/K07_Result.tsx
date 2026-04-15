@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Search, Home } from "lucide-react";
+import { generateReceiptContent } from "../../lib/receipt";
 
 export default function K07_Result() {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
+    // Simulate printing
+    const content = generateReceiptContent({
+      orderNo: "A052",
+      stallName: "大众快餐",
+      items: [{ name: "招牌红烧肉", count: 1, price: 18 }, { name: "清炒时蔬", count: 1, price: 8 }],
+      totalAmount: 26,
+      time: new Date().toLocaleString(),
+      pickupMethod: "堂食"
+    });
+    console.log("Printing receipt:\n", content);
+
     if (countdown <= 0) {
       navigate('/kiosk');
       return;
@@ -17,6 +29,12 @@ export default function K07_Result() {
 
   return (
     <div className="w-full h-full flex flex-col bg-gray-50">
+      {/* Printing Notification */}
+      <div className="bg-blue-600 text-white py-4 px-8 flex items-center justify-center gap-4 animate-pulse shrink-0">
+        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+        <span className="text-2xl font-bold">正在打印小票，请勿离开...</span>
+      </div>
+
       {/* Top 180px */}
       <div className="h-[180px] flex flex-col items-center justify-end pb-8 shrink-0">
         <div className="flex items-center gap-4 text-green-500">

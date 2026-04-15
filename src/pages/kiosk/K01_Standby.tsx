@@ -53,24 +53,13 @@ export default function K01_Standby() {
             navigate('/kiosk/home');
           }}
         >
-          点击屏幕开始点餐
+          开始点餐
           <ChevronRight size={48} className="animate-pulse" />
         </button>
       </div>
 
-      {/* Bottom 500px: Announcements */}
+      {/* Bottom 500px */}
       <div className="h-[500px] flex flex-col justify-end pb-16 px-12">
-        <div className="bg-gray-50 rounded-3xl p-8 flex items-center gap-6 mb-8">
-          <div className="bg-blue-100 text-blue-600 p-4 rounded-full">
-            <Volume2 size={32} />
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-2xl text-gray-700 whitespace-nowrap animate-[marquee_15s_linear_infinite]">
-              今日特推：红烧肉套餐立减5元！请大家按需点餐，杜绝浪费。光盘行动，从我做起。
-            </p>
-          </div>
-        </div>
-        
         <div className="text-center text-gray-400 text-xl">
           <p>请妥善保管好您的随身物品</p>
           <p className="mt-2 text-lg">v2.1.0</p>

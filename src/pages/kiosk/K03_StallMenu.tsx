@@ -6,15 +6,15 @@ import K04_DishDetail from "./K04_DishDetail";
 const CATEGORIES = ["全部", "主食", "素菜", "荤菜", "蛋奶坚果", "汤饮", "水果"];
 
 const DISHES = [
-  { id: 1, name: "招牌红烧肉", price: 18, category: "荤菜", image: "https://images.unsplash.com/photo-1588897056659-4e98fac41bf6?w=400&q=80", tags: ["高蛋白", "推荐"], soldOut: false },
-  { id: 2, name: "清炒时蔬", price: 8, category: "素菜", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=400&q=80", tags: ["低脂", "素食"], soldOut: false },
-  { id: 3, name: "糖醋排骨", price: 22, category: "荤菜", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80", tags: ["招牌"], soldOut: true },
-  { id: 4, name: "麻婆豆腐", price: 12, category: "素菜", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80", tags: ["微辣"], soldOut: false },
-  { id: 5, name: "番茄炒蛋", price: 10, category: "素菜", image: "https://images.unsplash.com/photo-1613292443284-8d10ef9383fe?w=400&q=80", tags: ["家常"], soldOut: false },
-  { id: 6, name: "紫菜蛋花汤", price: 5, category: "汤饮", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80", tags: ["清淡"], soldOut: false },
-  { id: 7, name: "白米饭", price: 2, category: "主食", image: "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=400&q=80", tags: [], soldOut: false },
-  { id: 8, name: "坚果酸奶", price: 8, category: "蛋奶坚果", image: "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400&q=80", tags: ["健康"], soldOut: false },
-  { id: 9, name: "鲜切西瓜", price: 6, category: "水果", image: "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&q=80", tags: ["应季"], soldOut: false },
+  { id: 1, name: "招牌红烧肉", price: 18, category: "荤菜", image: "https://images.unsplash.com/photo-1588897056659-4e98fac41bf6?w=400&q=80", tags: ["高蛋白", "推荐"], soldOut: false, nutrition: { energy: 350, protein: 25, fat: 28, carbs: 5 } },
+  { id: 2, name: "清炒时蔬", price: 8, category: "素菜", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=400&q=80", tags: ["低脂", "素食"], soldOut: false, nutrition: { energy: 80, protein: 2, fat: 4, carbs: 8 } },
+  { id: 3, name: "糖醋排骨", price: 22, category: "荤菜", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80", tags: ["招牌"], soldOut: true, nutrition: { energy: 420, protein: 22, fat: 30, carbs: 15 } },
+  { id: 4, name: "麻婆豆腐", price: 12, category: "素菜", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80", tags: ["微辣"], soldOut: false, nutrition: { energy: 180, protein: 12, fat: 10, carbs: 6 } },
+  { id: 5, name: "番茄炒蛋", price: 10, category: "素菜", image: "https://images.unsplash.com/photo-1613292443284-8d10ef9383fe?w=400&q=80", tags: ["家常"], soldOut: false, nutrition: { energy: 150, protein: 8, fat: 9, carbs: 10 } },
+  { id: 6, name: "紫菜蛋花汤", price: 5, category: "汤饮", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80", tags: ["清淡"], soldOut: false, nutrition: { energy: 45, protein: 3, fat: 2, carbs: 4 } },
+  { id: 7, name: "白米饭", price: 2, category: "主食", image: "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=400&q=80", tags: [], soldOut: false, nutrition: { energy: 230, protein: 4, fat: 0.5, carbs: 50 } },
+  { id: 8, name: "坚果酸奶", price: 8, category: "蛋奶坚果", image: "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400&q=80", tags: ["健康"], soldOut: false, nutrition: { energy: 160, protein: 6, fat: 8, carbs: 18 } },
+  { id: 9, name: "鲜切西瓜", price: 6, category: "水果", image: "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&q=80", tags: ["应季"], soldOut: false, nutrition: { energy: 60, protein: 1, fat: 0.2, carbs: 15 } },
 ];
 
 interface CartItem {
@@ -22,6 +22,12 @@ interface CartItem {
   name: string;
   price: number;
   count: number;
+  nutrition: {
+    energy: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+  };
 }
 
 export default function K03_StallMenu() {
@@ -35,6 +41,12 @@ export default function K03_StallMenu() {
 
   const cartCount = cart.reduce((sum, item) => sum + item.count, 0);
   const cartTotal = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  const cartNutrition = cart.reduce((acc, item) => ({
+    energy: acc.energy + item.nutrition.energy * item.count,
+    protein: acc.protein + item.nutrition.protein * item.count,
+    fat: acc.fat + item.nutrition.fat * item.count,
+    carbs: acc.carbs + item.nutrition.carbs * item.count,
+  }), { energy: 0, protein: 0, fat: 0, carbs: 0 });
 
   const filteredDishes = selectedCategory === "全部" 
     ? DISHES 
@@ -46,7 +58,7 @@ export default function K03_StallMenu() {
       if (existing) {
         return prev.map(item => item.id === dish.id ? { ...item, count: item.count + count } : item);
       }
-      return [...prev, { id: dish.id, name: dish.name, price: dish.price, count }];
+      return [...prev, { id: dish.id, name: dish.name, price: dish.price, count, nutrition: dish.nutrition }];
     });
   };
 
@@ -229,7 +241,17 @@ export default function K03_StallMenu() {
                 isCartOpen ? <ChevronDown size={20} /> : <ChevronUp size={20} />
               )}
             </div>
-            <div className="text-4xl font-bold text-red-500">¥{cartTotal.toFixed(2)}</div>
+            <div className="flex items-baseline gap-4">
+              <div className="text-4xl font-bold text-red-500">¥{cartTotal.toFixed(2)}</div>
+              {cartCount > 0 && (
+                <div className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full flex gap-3">
+                  <span>能量: <span className="text-orange-600 font-bold">{cartNutrition.energy}</span> kcal</span>
+                  <span>蛋白质: <span className="text-blue-600 font-bold">{cartNutrition.protein}</span>g</span>
+                  <span>脂肪: <span className="text-yellow-600 font-bold">{cartNutrition.fat}</span>g</span>
+                  <span>碳水: <span className="text-green-600 font-bold">{cartNutrition.carbs}</span>g</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
