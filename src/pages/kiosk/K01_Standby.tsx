@@ -7,7 +7,7 @@ export default function K01_Standby() {
   return (
     <div 
       className="w-full h-full flex flex-col bg-white"
-      onClick={() => navigate('/kiosk/home')}
+      onClick={() => navigate('/kiosk/list')}
     >
       {/* Top 180px: Restaurant Name + Current Meal */}
       <div className="h-[180px] flex items-center justify-between px-12 pt-8">
@@ -24,9 +24,6 @@ export default function K01_Standby() {
             <h1 className="text-4xl font-bold text-gray-900">智慧营养食堂</h1>
             <p className="text-xl text-gray-500 mt-2">Smart Nutrition Canteen</p>
           </div>
-        </div>
-        <div className="bg-orange-100 text-orange-600 px-8 py-4 rounded-full text-2xl font-medium">
-          午餐时段 11:00 - 13:30
         </div>
       </div>
 
@@ -50,7 +47,7 @@ export default function K01_Standby() {
           className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white rounded-full px-20 py-8 text-4xl font-bold shadow-xl shadow-orange-500/30 flex items-center gap-4 transition-transform active:scale-95"
           onClick={(e) => {
             e.stopPropagation();
-            navigate('/kiosk/home');
+            navigate('/kiosk/list');
           }}
         >
           开始点餐

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#F3F4F6">
+
+    <!-- Sidebar Categories (Left) -->
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingTop="24dp">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="智慧食堂"
+            android:textColor="#2563EB"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/lvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@null" />
+    </LinearLayout>
+
+    <!-- Main Content (Middle) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Search Bar -->
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_search_rounded"
+            android:hint="搜索你想吃的菜品..."
+            android:paddingLeft="16dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="10dp" />
+
+        <!-- Category Title -->
+        <TextView
+            android:id="@+id/tvCurrentCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="特色招牌"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#111827" />
+
+        <!-- Grid of Food Items -->
+        <GridView
+            android:id="@+id/gvFoodItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:numColumns="2"
+            android:verticalSpacing="16dp"
+            android:horizontalSpacing="16dp" />
+    </LinearLayout>
+
+    <!-- Cart Sidebar (Right) -->
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="vertical">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:text="我的清单"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#111827" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCartItems"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Cart Summary Footer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F9FAFB"
+            android:orientation="vertical"
+            android:padding="24dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="物品总计" android:textColor="#4B5563" />
+                <TextView android:id="@+id/tvTotalCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0份" android:textColor="#111827" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="合计金额" android:textSize="20sp" android:textStyle="bold" android:textColor="#111827" />
+                <TextView android:id="@+id/tvTotalPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="¥0.00" android:textSize="24sp" android:textStyle="bold" android:textColor="#2563EB" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#2563EB"
+                android:text="去结算"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Search, Store } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ArrowLeft, Search, Store, Clock } from "lucide-react";
+import { getCurrentMealPeriod } from "../../lib/mealPeriods";
 
 const RESTAURANTS = [
   {
@@ -25,10 +26,19 @@ const RESTAURANTS = [
   }
 ];
 
-export default function K02_Home() {
+export default function K04_StallList() {
   const navigate = useNavigate();
   const [activeRestaurantId, setActiveRestaurantId] = useState(RESTAURANTS[0].id);
   const activeRestaurant = RESTAURANTS.find(r => r.id === activeRestaurantId) || RESTAURANTS[0];
+  const [currentMeal, setCurrentMeal] = useState(getCurrentMealPeriod());
+
+  useEffect(() => {
+    // Refresh meal period every minute
+    const interval = setInterval(() => {
+      setCurrentMeal(getCurrentMealPeriod());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col bg-gray-50">
@@ -39,20 +49,28 @@ export default function K02_Home() {
           className="flex items-center gap-3 text-gray-600 hover:text-gray-900 bg-gray-100 px-6 py-4 rounded-full text-xl font-medium active:bg-gray-200"
         >
           <ArrowLeft size={28} />
-          返回待机
+          上一步
         </button>
         
-        <div className="text-2xl font-bold text-gray-900">
-          午餐时段 <span className="text-orange-500 ml-2">11:00 - 13:30</span>
+        <div className="flex items-center gap-4 bg-orange-50 px-6 py-3 rounded-2xl border border-orange-100">
+          <Clock className="text-orange-500" size={28} />
+          <div className="flex flex-col">
+            <span className="text-gray-500 text-sm font-medium uppercase tracking-wider">当前时段</span>
+            <div className="text-xl font-bold text-gray-900">
+              {currentMeal.name} <span className="text-orange-500 ml-2">{currentMeal.startTime} - {currentMeal.endTime}</span>
+            </div>
+          </div>
         </div>
 
-        <button 
-          onClick={() => navigate('/kiosk/orders')}
-          className="flex items-center gap-3 text-blue-600 bg-blue-50 px-6 py-4 rounded-full text-xl font-medium active:bg-blue-100"
-        >
-          <Search size={28} />
-          查询订单
-        </button>
+        <div className="flex items-center gap-4 pr-32"> {/* Added padding to avoid global button */}
+          <button 
+            onClick={() => navigate('/kiosk/orders')}
+            className="flex items-center gap-3 text-blue-600 bg-blue-50 px-6 py-4 rounded-full text-xl font-medium active:bg-blue-100"
+          >
+            <Search size={28} />
+            查询订单
+          </button>
+        </div>
       </div>
 
       {/* Stalls Area */}
@@ -70,9 +88,9 @@ export default function K02_Home() {
               onClick={() => setActiveRestaurantId(rest.id)}
               className={`pb-4 text-2xl font-bold whitespace-nowrap border-b-4 transition-colors ${
                 activeRestaurantId === rest.id
-                  ? 'border-orange-500 text-orange-500'
-                  : 'border-transparent text-gray-500'
-              }`}
+                   ? 'border-orange-500 text-orange-500'
+                   : 'border-transparent text-gray-500'
+               }`}
             >
               {rest.name}
             </button>

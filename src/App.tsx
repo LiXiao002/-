@@ -7,18 +7,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import KioskLayout from "./layouts/KioskLayout";
 import ScreenLayout from "./layouts/ScreenLayout";
+import ReceiptSample from "./pages/ReceiptSample";
 
 // Kiosk Pages
 import K01_Standby from "./pages/kiosk/K01_Standby";
-import K02_Home from "./pages/kiosk/K02_Home";
+import K04_StallList from "./pages/kiosk/K04_StallList";
 import K03_StallMenu from "./pages/kiosk/K03_StallMenu";
 import K05_Cart from "./pages/kiosk/K05_Cart";
 import K06_Payment from "./pages/kiosk/K06_Payment";
 import K07_Result from "./pages/kiosk/K07_Result";
 import K08_OrderSearch from "./pages/kiosk/K08_OrderSearch";
 import K09_PaymentFail from "./pages/kiosk/K09_PaymentFail";
-
-// Screen Pages
 import S01_MainScreen from "./pages/screen/S01_MainScreen";
 import S02_Offline from "./pages/screen/S02_Offline";
 
@@ -27,10 +26,11 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/receipt-sample" element={<ReceiptSample />} />
         
         <Route path="/kiosk" element={<KioskLayout />}>
           <Route index element={<K01_Standby />} />
-          <Route path="home" element={<K02_Home />} />
+          <Route path="list" element={<K04_StallList />} />
           <Route path="stall/:id" element={<K03_StallMenu />} />
           <Route path="cart" element={<K05_Cart />} />
           <Route path="pay" element={<K06_Payment />} />

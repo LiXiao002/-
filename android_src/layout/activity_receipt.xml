@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/layoutReceipt"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#FFFFFF">
+
+        <!-- Jagged edge would be a custom drawable or view, omitting for brevity -->
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="智慧营养食堂"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:background="#000000" />
+
+        <!-- Stall & Order Number -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:id="@+id/tvStallName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom_black"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="4dp"
+                android:text="大众快餐"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvOrderNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="A052"
+                android:textColor="#000000"
+                android:textSize="56sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#888888"
+            android:layerType="software"
+            android:backgroundTint="#888888" />
+
+        <!-- Pickup Info Group -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/border_black_2dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="取餐方式：" android:textStyle="bold" android:textColor="#000000" />
+                <TextView android:id="@+id/tvPickupMethod" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:text="取餐柜" android:textSize="18sp" android:textStyle="bold" android:textColor="#000000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="取餐时间：" android:textStyle="bold" android:textColor="#000000" />
+                <TextView android:id="@+id/tvPickupTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:text="2023-10-27 12:15:00" android:textSize="13sp" android:textStyle="bold" android:textColor="#000000" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Meta Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/row_meta" android:id="@+id/rowPayment" />
+            <include layout="@layout/row_meta" android:id="@+id/rowOrderTime" />
+            <include layout="@layout/row_meta" android:id="@+id/rowOrderId" />
+            <include layout="@layout/row_meta" android:id="@+id/rowOrderer" />
+            <include layout="@layout/row_meta" android:id="@+id/rowDept" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#888888" />
+
+        <!-- Table Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.5" android:text="品名" android:textSize="12sp" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.25" android:gravity="center" android:text="数量" android:textSize="12sp" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.25" android:gravity="right" android:text="金额" android:textSize="12sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Items Container -->
+        <LinearLayout
+            android:id="@+id/containerItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#888888" />
+
+        <!-- Totals -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/row_total" android:id="@+id/totalAmount" />
+            <include layout="@layout/row_total" android:id="@+id/discountAmount" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="8dp" android:background="#888888" />
+            <include layout="@layout/row_total_bold" android:id="@+id/actualAmount" />
+        </LinearLayout>
+
+        <!-- Nutrition Summary -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="【本单营养汇总】" android:textSize="12sp" android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvNutritionSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_dashed_light"
+                android:padding="8dp"
+                android:text="能量 530 kcal | 蛋白质 14 g\n脂肪 38 g | 碳水 25 g | 纤维 4 g"
+                android:textSize="11sp"
+                android:textColor="#444444" />
+        </LinearLayout>
+
+        <!-- QR Code -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/border_top_dashed_black">
+            
+            <ImageView
+                android:id="@+id/ivQrCode"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/sample_qr" />
+            
+            <TextView
+                android:id="@+id/tvOrderIdFooter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="DD20231027001"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

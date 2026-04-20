@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, ShoppingCart, Plus, Info, Trash2, Minus, ChevronUp, ChevronDown } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Plus, Info, Trash2, Minus, ChevronUp, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 import K04_DishDetail from "./K04_DishDetail";
 
 const CATEGORIES = ["全部", "主食", "素菜", "荤菜", "蛋奶坚果", "汤饮", "水果"];
 
 const DISHES = [
-  { id: 1, name: "招牌红烧肉", price: 18, category: "荤菜", image: "https://images.unsplash.com/photo-1588897056659-4e98fac41bf6?w=400&q=80", tags: ["高蛋白", "推荐"], soldOut: false, nutrition: { energy: 350, protein: 25, fat: 28, carbs: 5 } },
-  { id: 2, name: "清炒时蔬", price: 8, category: "素菜", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=400&q=80", tags: ["低脂", "素食"], soldOut: false, nutrition: { energy: 80, protein: 2, fat: 4, carbs: 8 } },
-  { id: 3, name: "糖醋排骨", price: 22, category: "荤菜", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80", tags: ["招牌"], soldOut: true, nutrition: { energy: 420, protein: 22, fat: 30, carbs: 15 } },
-  { id: 4, name: "麻婆豆腐", price: 12, category: "素菜", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80", tags: ["微辣"], soldOut: false, nutrition: { energy: 180, protein: 12, fat: 10, carbs: 6 } },
-  { id: 5, name: "番茄炒蛋", price: 10, category: "素菜", image: "https://images.unsplash.com/photo-1613292443284-8d10ef9383fe?w=400&q=80", tags: ["家常"], soldOut: false, nutrition: { energy: 150, protein: 8, fat: 9, carbs: 10 } },
-  { id: 6, name: "紫菜蛋花汤", price: 5, category: "汤饮", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80", tags: ["清淡"], soldOut: false, nutrition: { energy: 45, protein: 3, fat: 2, carbs: 4 } },
-  { id: 7, name: "白米饭", price: 2, category: "主食", image: "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=400&q=80", tags: [], soldOut: false, nutrition: { energy: 230, protein: 4, fat: 0.5, carbs: 50 } },
-  { id: 8, name: "坚果酸奶", price: 8, category: "蛋奶坚果", image: "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400&q=80", tags: ["健康"], soldOut: false, nutrition: { energy: 160, protein: 6, fat: 8, carbs: 18 } },
-  { id: 9, name: "鲜切西瓜", price: 6, category: "水果", image: "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&q=80", tags: ["应季"], soldOut: false, nutrition: { energy: 60, protein: 1, fat: 0.2, carbs: 15 } },
+  { id: 1, name: "招牌红烧肉", price: 18, category: "荤菜", image: "https://images.unsplash.com/photo-1588897056659-4e98fac41bf6?w=400&q=80", tags: ["高蛋白", "推荐"], soldOut: false, nutrition: { energy: 350, protein: 25, fat: 28, carbs: 5, fiber: 0 } },
+  { id: 2, name: "清炒时蔬", price: 8, category: "素菜", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=400&q=80", tags: ["低脂", "素食"], soldOut: false, nutrition: { energy: 80, protein: 2, fat: 4, carbs: 8, fiber: 3 } },
+  { id: 3, name: "糖醋排骨", price: 22, category: "荤菜", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80", tags: ["招牌"], soldOut: true, nutrition: { energy: 420, protein: 22, fat: 30, carbs: 15, fiber: 0 } },
+  { id: 4, name: "麻婆豆腐", price: 12, category: "素菜", image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80", tags: ["微辣"], soldOut: false, nutrition: { energy: 180, protein: 12, fat: 10, carbs: 6, fiber: 2 } },
+  { id: 5, name: "番茄炒蛋", price: 10, category: "素菜", image: "https://images.unsplash.com/photo-1613292443284-8d10ef9383fe?w=400&q=80", tags: ["家常"], soldOut: false, nutrition: { energy: 150, protein: 8, fat: 9, carbs: 10, fiber: 1 } },
+  { id: 6, name: "紫菜蛋花汤", price: 5, category: "汤饮", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80", tags: ["清淡"], soldOut: false, nutrition: { energy: 45, protein: 3, fat: 2, carbs: 4, fiber: 0.5 } },
+  { id: 7, name: "白米饭", price: 2, category: "主食", image: "https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=400&q=80", tags: [], soldOut: false, nutrition: { energy: 230, protein: 4, fat: 0.5, carbs: 50, fiber: 1 } },
+  { id: 8, name: "坚果酸奶", price: 8, category: "蛋奶坚果", image: "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400&q=80", tags: ["健康"], soldOut: false, nutrition: { energy: 160, protein: 6, fat: 8, carbs: 18, fiber: 2 } },
+  { id: 9, name: "鲜切西瓜", price: 6, category: "水果", image: "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&q=80", tags: ["应季"], soldOut: false, nutrition: { energy: 60, protein: 1, fat: 0.2, carbs: 15, fiber: 1.5 } },
 ];
 
 interface CartItem {
@@ -27,6 +27,7 @@ interface CartItem {
     protein: number;
     fat: number;
     carbs: number;
+    fiber: number;
   };
 }
 
@@ -38,6 +39,10 @@ export default function K03_StallMenu() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedDish, setSelectedDish] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState("全部");
+  
+  // Sorting state
+  const [sortMetric, setSortMetric] = useState<'energy' | 'carbs' | 'protein' | 'fat' | 'fiber'>('energy');
+  const [sortDirection, setSortDirection] = useState<'desc' | 'asc'>('desc');
 
   const cartCount = cart.reduce((sum, item) => sum + item.count, 0);
   const cartTotal = cart.reduce((sum, item) => sum + item.price * item.count, 0);
@@ -46,11 +51,26 @@ export default function K03_StallMenu() {
     protein: acc.protein + item.nutrition.protein * item.count,
     fat: acc.fat + item.nutrition.fat * item.count,
     carbs: acc.carbs + item.nutrition.carbs * item.count,
-  }), { energy: 0, protein: 0, fat: 0, carbs: 0 });
+    fiber: acc.fiber + item.nutrition.fiber * item.count,
+  }), { energy: 0, protein: 0, fat: 0, carbs: 0, fiber: 0 });
 
-  const filteredDishes = selectedCategory === "全部" 
-    ? DISHES 
-    : DISHES.filter(d => d.category === selectedCategory);
+  const filteredAndSortedDishes = useMemo(() => {
+    let result = selectedCategory === "全部" 
+      ? [...DISHES] 
+      : DISHES.filter(d => d.category === selectedCategory);
+
+    result.sort((a, b) => {
+      const valA = a.nutrition[sortMetric];
+      const valB = b.nutrition[sortMetric];
+      if (sortDirection === 'desc') {
+        return valB - valA;
+      } else {
+        return valA - valB;
+      }
+    });
+
+    return result;
+  }, [selectedCategory, sortMetric, sortDirection]);
 
   const handleAddToCart = (dish: any, count: number = 1) => {
     setCart(prev => {
@@ -86,7 +106,7 @@ export default function K03_StallMenu() {
       {/* Top 140px */}
       <div className="h-[140px] bg-white px-8 flex items-center justify-between shadow-sm z-10 shrink-0">
         <button 
-          onClick={() => navigate('/kiosk/home')}
+          onClick={() => navigate('/kiosk')}
           className="flex items-center gap-3 text-gray-600 hover:text-gray-900 bg-gray-100 px-6 py-4 rounded-full text-xl font-medium active:bg-gray-200"
         >
           <ArrowLeft size={28} />
@@ -97,81 +117,129 @@ export default function K03_StallMenu() {
           大众快餐
         </div>
 
-        <div className="w-[140px]"></div> {/* Spacer for centering */}
+        <div className="w-[200px]"></div> {/* Increased spacer for centering and to clear global button */}
       </div>
 
-      {/* Main Area (Sidebar + List) */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar */}
-        <div className="w-[200px] bg-white border-r border-gray-100 flex flex-col overflow-y-auto pb-[160px] hide-scrollbar z-0 shrink-0">
+      {/* Main Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Categories Bar (Horizontal) */}
+        <div className="bg-white border-b border-gray-100 flex overflow-x-auto hide-scrollbar shrink-0 px-4">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`py-8 text-2xl font-bold transition-colors relative ${
+              className={`px-8 py-6 text-2xl font-bold transition-colors relative whitespace-nowrap ${
                 selectedCategory === cat
-                  ? 'text-orange-500 bg-orange-50/50'
+                  ? 'text-orange-500'
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
-              {selectedCategory === cat && (
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-orange-500 rounded-r-full" />
-              )}
               {cat}
+              {selectedCategory === cat && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-orange-500 rounded-t-full" />
+              )}
             </button>
           ))}
         </div>
 
-        {/* List Area */}
-        <div className="flex-1 overflow-y-auto p-8 pb-[200px] hide-scrollbar bg-gray-50">
-          <div className="grid grid-cols-2 gap-6">
-            {filteredDishes.map((dish) => (
-              <div 
-                key={dish.id}
-                className={`bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col ${dish.soldOut ? 'opacity-60 grayscale' : ''}`}
-                onClick={() => !dish.soldOut && setSelectedDish(dish)}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Left Sidebar (Sorting Metrics) */}
+          <div className="w-[180px] bg-gray-50 border-r border-gray-200 flex flex-col overflow-y-auto pb-[160px] hide-scrollbar shrink-0 p-4 gap-4">
+            {[
+              { id: 'energy', label: '热量' },
+              { id: 'carbs', label: '碳水' },
+              { id: 'protein', label: '蛋白质' },
+              { id: 'fat', label: '脂肪' },
+              { id: 'fiber', label: '膳食纤维' }
+            ].map(metric => (
+              <button
+                key={metric.id}
+                onClick={() => setSortMetric(metric.id as any)}
+                className={`py-4 px-2 text-xl font-bold rounded-xl transition-all ${
+                  sortMetric === metric.id
+                    ? 'bg-orange-500 text-white shadow-md'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                }`}
               >
-                <div className="h-40 w-full relative shrink-0">
-                  <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
-                  {dish.soldOut && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <span className="bg-gray-900 text-white px-6 py-2 rounded-full text-xl font-bold">已售罄</span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-5 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-2xl font-bold text-gray-900">{dish.name}</h3>
-                    <button className="text-gray-400 p-1 active:text-gray-600">
-                      <Info size={24} />
-                    </button>
-                  </div>
-                  
-                  <div className="flex gap-2 mb-4 flex-wrap">
-                    {dish.tags.map(tag => (
-                      <span key={tag} className="px-2 py-1 bg-green-50 text-green-600 text-sm rounded-md border border-green-100">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                {metric.label}
+              </button>
+            ))}
+          </div>
 
-                  <div className="mt-auto flex items-center justify-between">
-                    <span className="text-3xl font-bold text-red-500">¥{dish.price}</span>
-                    {!dish.soldOut && (
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAddToCart(dish, 1);
-                        }}
-                        className="bg-orange-500 text-white p-3 rounded-full active:bg-orange-600 transition-colors"
-                      >
-                        <Plus size={28} />
-                      </button>
+          {/* List Area */}
+          <div className="flex-1 overflow-y-auto p-8 pb-[200px] hide-scrollbar bg-gray-100">
+            {/* Sort Direction Bar */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => setSortDirection('desc')}
+                  className={`flex items-center gap-2 px-6 py-2 rounded-lg border text-lg font-bold transition-colors ${
+                    sortDirection === 'desc' 
+                      ? 'border-orange-500 text-orange-500 bg-orange-50' 
+                      : 'border-gray-300 text-gray-600 bg-white'
+                  }`}
+                >
+                  从高到低 <ArrowDown size={20} />
+                </button>
+                <button 
+                  onClick={() => setSortDirection('asc')}
+                  className={`flex items-center gap-2 px-6 py-2 rounded-lg border text-lg font-bold transition-colors ${
+                    sortDirection === 'asc' 
+                      ? 'border-orange-500 text-orange-500 bg-orange-50' 
+                      : 'border-gray-300 text-gray-600 bg-white'
+                  }`}
+                >
+                  从低到高 <ArrowUp size={20} />
+                </button>
+              </div>
+              <div className="text-gray-500 text-lg">每100g营养值</div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6">
+              {filteredAndSortedDishes.map((dish) => (
+                <div 
+                  key={dish.id}
+                  className={`bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col ${dish.soldOut ? 'opacity-60 grayscale' : ''}`}
+                  onClick={() => !dish.soldOut && setSelectedDish(dish)}
+                >
+                  <div className="h-48 w-full relative shrink-0">
+                    <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
+                    {dish.soldOut && (
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span className="bg-gray-900 text-white px-6 py-2 rounded-full text-xl font-bold">已售罄</span>
+                      </div>
                     )}
                   </div>
+                  <div className="p-4 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 truncate">{dish.name}</h3>
+                    
+                    <div className="mt-auto space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="text-orange-500 font-bold">
+                          <span className="text-sm">¥</span>
+                          <span className="text-2xl">{dish.price}</span>
+                          <span className="text-sm text-gray-400">/份</span>
+                        </div>
+                        {!dish.soldOut && (
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(dish, 1);
+                            }}
+                            className="bg-orange-500 text-white p-2 rounded-full active:bg-orange-600 transition-colors shadow-sm"
+                          >
+                            <Plus size={20} />
+                          </button>
+                        )}
+                      </div>
+                      <div className="text-gray-500 text-sm flex items-center gap-1 bg-gray-50 px-3 py-1.5 rounded-md w-fit whitespace-nowrap">
+                        ★ {dish.nutrition[sortMetric]}{sortMetric === 'energy' ? 'kcal' : 'g'}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

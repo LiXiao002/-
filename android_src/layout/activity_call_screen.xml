@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#111827"
+    android:orientation="vertical">
+
+    <!-- Top Header Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#1F2937"
+        android:paddingHorizontal="48dp">
+
+        <TextView
+            android:id="@+id/tvCallStallName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="大众快餐"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="12:05:32"
+            android:textColor="#9CA3AF"
+            android:textSize="28sp" />
+    </RelativeLayout>
+
+    <!-- Main Content Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Column: Ready for Pickup -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#064E3B"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="请取餐"
+                android:textColor="#FFFFFF"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PLEASE PICK UP"
+                android:textColor="#6EE7B7"
+                android:textSize="20sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- Big number for the latest called -->
+            <TextView
+                android:id="@+id/tvLatestNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:text="A052"
+                android:textColor="#FCD34D"
+                android:textSize="180sp"
+                android:textStyle="bold" />
+
+            <!-- Sub grid for other ready numbers -->
+            <GridView
+                android:id="@+id/gvReadyNumbers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:numColumns="3"
+                android:horizontalSpacing="16dp"
+                android:verticalSpacing="16dp" />
+        </LinearLayout>
+
+        <!-- Column: Preparing -->
+        <LinearLayout
+            android:layout_width="450dp"
+            android:layout_height="match_parent"
+            android:background="#1F2937"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="正在排队"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PREPARING"
+                android:textColor="#9CA3AF"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="24dp"
+                android:background="#374151" />
+
+            <ListView
+                android:id="@+id/lvPreparingNumbers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:divider="#374151"
+                android:dividerHeight="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Footer Marquee / Announcement -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#EF4444"
+        android:gravity="center"
+        android:paddingHorizontal="48dp">
+        <TextView
+            android:id="@+id/tvAnnouncement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请 A052 号顾客到大众快餐档口取餐..."
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:singleLine="true" />
+    </LinearLayout>
+</LinearLayout>

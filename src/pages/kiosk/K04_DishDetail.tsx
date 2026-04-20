@@ -35,8 +35,8 @@ export default function K04_DishDetail({ dish, onClose, onAdd }: DishDetailProps
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         </div>
 
-        {/* Content Area */}
-        <div className="flex-1 p-10 flex flex-col overflow-y-auto">
+        {/* Content Area - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-10 pb-4">
           <div className="flex justify-between items-start mb-6">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-3">{dish.name}</h2>
@@ -98,34 +98,35 @@ export default function K04_DishDetail({ dish, onClose, onAdd }: DishDetailProps
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="mt-auto pt-8 border-t border-gray-100 flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <span className="text-2xl text-gray-700 font-medium">数量</span>
-              <div className="flex items-center gap-4 bg-gray-100 rounded-full p-2">
-                <button 
-                  onClick={() => setCount(Math.max(1, count - 1))}
-                  className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-gray-600 shadow-sm active:scale-95"
-                >
-                  <Minus size={28} />
-                </button>
-                <span className="text-3xl font-bold w-12 text-center">{count}</span>
-                <button 
-                  onClick={() => setCount(count + 1)}
-                  className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm active:scale-95"
-                >
-                  <Plus size={28} />
-                </button>
-              </div>
+        {/* Bottom Action Bar - Sticky */}
+        <div className="p-10 pt-6 border-t border-gray-100 bg-white flex items-center justify-between shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.03)]">
+          <div className="flex items-center gap-6">
+            <span className="text-2xl text-gray-700 font-medium">数量</span>
+            <div className="flex items-center gap-4 bg-gray-100 rounded-full p-2">
+              <button 
+                onClick={() => setCount(Math.max(1, count - 1))}
+                className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-gray-600 shadow-sm active:scale-95"
+              >
+                <Minus size={28} />
+              </button>
+              <span className="text-3xl font-bold w-12 text-center">{count}</span>
+              <button 
+                onClick={() => setCount(count + 1)}
+                className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-gray-900 shadow-sm active:scale-95"
+              >
+                <Plus size={28} />
+              </button>
             </div>
-
-            <button 
-              onClick={() => onAdd(dish, count)}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 rounded-full text-3xl font-bold shadow-xl shadow-orange-500/30 active:scale-95 transition-transform"
-            >
-              加入购物车
-            </button>
           </div>
+
+          <button 
+            onClick={() => onAdd(dish, count)}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 rounded-full text-3xl font-bold shadow-xl shadow-orange-500/30 active:scale-95 transition-transform"
+          >
+            加入购物车
+          </button>
         </div>
       </div>
     </div>
